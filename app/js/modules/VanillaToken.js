@@ -1,16 +1,28 @@
 'use strict';
 
-var addToken = require('./addToken'),
+var _ = require('lodash'),
+  addToken = require('./addToken'),
   removeToken = require('./removeToken'),
   removeTokenByName = require('./removeTokenByName'),
   hasClass = require('../utils/hasClass');
 
 /**
+ * Defaults
+ */
+
+var defaults = {
+};
+
+
+/**
  * Constructor
  */
-var VanillaToken = function() {
+var VanillaToken = function(el, options) {
+
+  var settings = _.extend(defaults, options);
+
   this.initialize();
-  this.tokenList = document.getElementById('token-list');
+  this.tokenList = el;//document.getElementById('token-list');
   this.tokenStack = [];
 };
 

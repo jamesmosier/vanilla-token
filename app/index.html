@@ -13,7 +13,7 @@
 </head>
 
 <body>
-
+  <div class="bar" id="foo"></div>
   <div class="page-wrap compose-form">
 
     <div class="token-wrapper" onclick="document.getElementById('token-input').focus(); return false;">
@@ -27,6 +27,11 @@
   </div>
 
   <script src="/js/app.js"></script>
+
+  <script type="text/javascript">
+    var elem = document.getElementById('token-list');
+    new VanillaToken(elem);
+  </script>
 </body>
 
 </html>

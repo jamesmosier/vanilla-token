@@ -1,3 +1,8 @@
-var VanillaToken = require('./modules/VanillaToken');
+(function(window, document) {
+  'use strict';
 
-window.vanillaToken = new VanillaToken();
+  var VanillaToken = require('./modules/VanillaToken');
+
+  window.VanillaToken = VanillaToken;
+
+}(window, document));
