@@ -1,55 +1,73 @@
 'use strict';
 
-var AddToken = require('./addToken'),
-  RemoveToken = require('./removeToken'),
-  RemoveTokenByName = require('./removeTokenByName'),
-  HasClass = require('../utils/hasClass');
+var addToken = require('./addToken'),
+  removeToken = require('./removeToken'),
+  removeTokenByName = require('./removeTokenByName'),
+  hasClass = require('../utils/hasClass');
 
-var tokenStack = [],
-  tokenList = document.getElementById('token-list');
-
+/**
+ * Constructor
+ */
 var VanillaToken = function() {
   this.initialize();
+  this.tokenList = document.getElementById('token-list');
+  this.tokenStack = [];
 };
 
+/**
+ * Initialises the widget
+ */
 VanillaToken.prototype.initialize = function() {
   this.establishHandlers();
 };
 
+/**
+ * Establishes event handlers
+ */
 VanillaToken.prototype.establishHandlers = function() {
   var that = this;
 
   document.addEventListener('DOMContentLoaded', function() {
     var composeForm = document.querySelector('.compose-form');
-    composeForm.addEventListener('keydown', that.addRemoveToken, true);
+    composeForm.addEventListener('keydown', function(e) {
+      that.addRemoveToken(e, that);
+    }, true);
 
     var tokenWrapper = document.querySelector('.token-wrapper');
-    tokenWrapper.addEventListener('click', that.removeToken, true);
+    tokenWrapper.addEventListener('click', function(e) {
+      that.removeToken(e, that);
+    }, true);
   }, false);
 };
 
-VanillaToken.prototype.addRemoveToken = function(e) {
+/**
+ * Add & remove token logic
+ */
+VanillaToken.prototype.addRemoveToken = function(e, that) {
   e = e || window.event;
   var target = e.target || e.srcElement;
   var key = e.keyCode;
 
   if (key === 0 || key === 32 && (target.id === 'token-input')) {
     // if space key is pressed & user is inside 'token-input', add token
-    AddToken(target, tokenStack, tokenList);
+    addToken(target, that.tokenStack, that.tokenList);
   } else if (key === 8 || key === 46) {
     // if backspace or delete is pressed, remove the token
     var tokenInput = document.getElementById('token-input').value;
     if (/^\s*$/.test(tokenInput)) {
       // if token input has no value, it's ok to backspace delete
-      RemoveToken(tokenStack, tokenList);
+      removeToken(that.tokenStack, that.tokenList);
     }
   }
 };
 
-VanillaToken.prototype.removeToken = function(e) {
-  if (HasClass(e.target, 'remove-token')) {
+/**
+ * Remove token logic
+ */
+VanillaToken.prototype.removeToken = function(e, that) {
+  if (hasClass(e.target, 'remove-token')) {
     var tokenValue = e.target.nextSibling.value;
-    RemoveTokenByName(tokenStack, tokenList, tokenValue);
+    removeTokenByName(that.tokenStack, that.tokenList, tokenValue);
   }
 };
 
