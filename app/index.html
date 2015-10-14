@@ -16,20 +16,14 @@
   <div class="bar" id="foo"></div>
   <div class="page-wrap compose-form">
 
-    <div class="token-wrapper" onclick="document.getElementById('token-input').focus(); return false;">
-      <div class="cc-label">Cc</div>
-      <div class="tokenizer">
-        <div id="token-list"></div>
-        <input type="text" id="token-input">
-      </div>
-    </div>
+    <div id="target"></div>
 
   </div>
 
   <script src="/js/app.js"></script>
 
   <script type="text/javascript">
-    var elem = document.getElementById('token-list');
+    var elem = document.getElementById('target');
     new VanillaToken(elem);
   </script>
 </body>

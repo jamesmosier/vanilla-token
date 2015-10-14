@@ -4,7 +4,8 @@ var _ = require('lodash'),
   addToken = require('./addToken'),
   removeToken = require('./removeToken'),
   removeTokenByName = require('./removeTokenByName'),
-  hasClass = require('../utils/hasClass');
+  hasClass = require('../utils/hasClass'),
+  mainTemplate = require('./mainTemplate');
 
 /**
  * Defaults
@@ -21,8 +22,9 @@ var VanillaToken = function(el, options) {
 
   var settings = _.extend(defaults, options);
 
+  this.elem = el;
   this.initialize();
-  this.tokenList = el;//document.getElementById('token-list');
+  this.tokenList = document.getElementById('token-list');
   this.tokenStack = [];
 };
 
@@ -30,7 +32,15 @@ var VanillaToken = function(el, options) {
  * Initialises the widget
  */
 VanillaToken.prototype.initialize = function() {
+  this.createDomElems();
   this.establishHandlers();
+};
+
+/**
+ * Create DOM elements
+ */
+VanillaToken.prototype.createDomElems = function () {
+  this.elem.innerHTML += mainTemplate();
 };
 
 /**
@@ -40,15 +50,17 @@ VanillaToken.prototype.establishHandlers = function() {
   var that = this;
 
   document.addEventListener('DOMContentLoaded', function() {
-    var composeForm = document.querySelector('.compose-form');
-    composeForm.addEventListener('keydown', function(e) {
+
+    that.elem.addEventListener('keydown', function(e) {
       that.addRemoveToken(e, that);
     }, true);
 
-    var tokenWrapper = document.querySelector('.token-wrapper');
+    var tokenWrapper = document.getElementById('token-wrapper');
     tokenWrapper.addEventListener('click', function(e) {
+      document.getElementById('token-input').focus();
       that.removeToken(e, that);
     }, true);
+
   }, false);
 };
 
