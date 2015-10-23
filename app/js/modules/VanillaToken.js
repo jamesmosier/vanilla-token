@@ -40,7 +40,7 @@ VanillaToken.prototype.initialize = function() {
  * Create DOM elements
  */
 VanillaToken.prototype.createDomElems = function () {
-  this.elem.innerHTML += mainTemplate();
+  this.elem.appendChild(mainTemplate());
 };
 
 /**
