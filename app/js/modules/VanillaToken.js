@@ -47,21 +47,20 @@ VanillaToken.prototype.createDomElems = function () {
  * Establishes event handlers
  */
 VanillaToken.prototype.establishHandlers = function() {
-  var that = this;
 
   document.addEventListener('DOMContentLoaded', function() {
 
-    that.elem.addEventListener('keydown', function(e) {
-      that.addRemoveToken(e, that);
-    }, true);
+    this.elem.addEventListener('keydown', function(e) {
+      this.addRemoveToken(e, this);
+    }.bind(this), true);
 
     var tokenWrapper = document.getElementById('token-wrapper');
     tokenWrapper.addEventListener('click', function(e) {
       document.getElementById('token-input').focus();
-      that.removeToken(e, that);
-    }, true);
+      this.removeToken(e, this);
+    }.bind(this), true);
 
-  }, false);
+  }.bind(this), false);
 };
 
 /**
