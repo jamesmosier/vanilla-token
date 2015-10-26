@@ -68,8 +68,7 @@ VanillaToken.prototype.establishHandlers = function() {
  * Add & remove token logic
  */
 VanillaToken.prototype.addRemoveToken = function(e, that) {
-  e = e || window.event;
-  var target = e.target || e.srcElement;
+  var target = e.target;
   var key = e.keyCode;
 
   if (key === 0 || key === 32 && (target.id === 'token-input')) {
